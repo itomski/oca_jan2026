@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html"},{"p":"de.gfn.basic","l":"Datentypen"},{"p":"de.gfn.basic","l":"Namen"},{"p":"de.gfn.basic","l":"Variablen"}];updateSearchResults();
