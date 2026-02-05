@@ -30,8 +30,21 @@ public class Datentypen3 {
         System.out.println();
 
         byte b4 = 10; // primitiv
-        Byte b5 = 10; // komplex
-        //Short s = (Short)b5;
+        Byte b5 = 10; // komplex, Autoboxing byte auf Byte
+        b4 = b5; // Auto-Unboxing von Byte auf byte
 
+        //Integer i1 = b4; // Auoboxing von byte auf Byte, Byte ist zu Integer nicht kompatibel
+        Number n = b4; // Auoboxing von byte auf Byte, komplex Widening von Byte auf Number
+
+        System.out.println();
+
+        // Byte-Literal-Pool: Bei allen Ganzzahlen (-128 - 127)
+        Integer b7 = 121;
+        Integer b8 = 121;
+        Integer b9 = Integer.valueOf(121);
+        System.out.println(b7 == b8); // Komplexe Datentypen == ist ein Referenzvergleich
+        System.out.println(b7 == b9);
+        System.out.println(b7.equals(b8)); // equals ist ein Wertvergleich
+        System.out.println(b7.equals(b9)); // equals ist ein Wertvergleich
     }
 }
