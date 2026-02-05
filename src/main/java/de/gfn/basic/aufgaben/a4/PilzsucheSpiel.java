@@ -1,12 +1,14 @@
 package de.gfn.basic.aufgaben.a4;
 
+import de.gfn.basic.aufgaben.a2.Dice;
 import de.gfn.basic.aufgaben.a2.DiceCup;
 
 public class PilzsucheSpiel {
 
-    private static DiceCup cup = new DiceCup();
+    private static DiceCup cup = new DiceCup(Dice.W10);
 
     private final int MAX_VERSUCHE = 10;
+    private final int ANZAHL_PILZE = 10;
 
     private int[][] spielfeld;
     private int gefunden;
@@ -18,11 +20,20 @@ public class PilzsucheSpiel {
     }
 
     private void pilzeSetzen() {
-        for (int i = 0; i < 10; i++) {
-            int zeile = cup.roll();
-            int zelle = cup.roll();
-            spielfeld[zeile][zelle] = 1;
+        for (int i = 0; i < ANZAHL_PILZE; i++) {
+            pilzSetzen();
         }
+    }
+
+    private void pilzSetzen() {
+            int zeile = cup.roll() - 1;
+            int zelle = cup.roll() - 1;
+            if(spielfeld[zeile][zelle] == 1) {
+                pilzSetzen();
+            }
+            else {
+                spielfeld[zeile][zelle] = 1;
+            }
     }
 
     public boolean spielIstVorbei() {
