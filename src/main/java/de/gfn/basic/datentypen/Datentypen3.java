@@ -1,4 +1,4 @@
-package de.gfn.basic;
+package de.gfn.basic.datentypen;
 
 public class Datentypen3 {
 

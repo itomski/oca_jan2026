@@ -1,4 +1,4 @@
-package de.gfn.basic; // Wenn vorhanden, dann immer die erste Anweisung
+package de.gfn.basic.datentypen; // Wenn vorhanden, dann immer die erste Anweisung
 
 public class Datentypen {
 

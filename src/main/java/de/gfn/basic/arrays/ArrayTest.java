@@ -1,4 +1,6 @@
-package de.gfn.basic;
+package de.gfn.basic.arrays;
+
+import de.gfn.basic.Student;
 
 import java.util.Arrays;
 
