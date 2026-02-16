@@ -1,5 +1,7 @@
 package de.gfn.basic.lambda;
 
+import java.util.function.BinaryOperator;
+
 public class FunctionalInterfaceTest {
 
     public static void main(String[] args) throws InterruptedException {
@@ -21,6 +23,8 @@ public class FunctionalInterfaceTest {
 
         // Object o = a -> a * a; // Error
 
+        BinaryOperator<Double> newAdd = (a, b) -> a + b;
+        System.out.println(newAdd.apply(10.0, 15.0));
 
     }
 }
