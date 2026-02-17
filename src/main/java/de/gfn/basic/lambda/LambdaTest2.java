@@ -1,5 +1,7 @@
 package de.gfn.basic.lambda;
 
+// SAM = Single Abstract Methode
+
 public class LambdaTest2 {
 
     public static void main(String[] args) throws InterruptedException {
