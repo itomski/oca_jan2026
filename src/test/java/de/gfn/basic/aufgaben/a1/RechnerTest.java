@@ -9,7 +9,7 @@ class RechnerTest {
     void add5And7() {
         double erg = Rechner.add(5, 7);
         //assertTrue(erg == 12);
-        assertEquals(erg, 10);
+        assertEquals(erg, 12);
     }
 
     @Test
