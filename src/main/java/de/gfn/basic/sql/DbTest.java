@@ -1,9 +1,6 @@
 package de.gfn.basic.sql;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DbTest {
 
@@ -25,12 +22,26 @@ public class DbTest {
 //            System.out.println("Erfolgreich gebaut!");
 
             // Datensatz hinzufügen
-            final String SQL = "INSERT INTO personen (id, firstname, lastname, birthdate) " +
-                                    "VALUES(null, 'Bruce', 'Banner', '1982-05-10')";
+//            final String SQL = "INSERT INTO personen (id, firstname, lastname, birthdate) " +
+//                                    "VALUES(null, 'Bruce', 'Banner', '1982-05-10')";
+//
+//            if(stmt.executeUpdate(SQL) > 0) {
+//                System.out.println("Erfolgreich gespeichert!");
+//            }
 
-            if(stmt.executeUpdate(SQL) > 0) {
-                System.out.println("Erfolgreich gespeichert!");
+            // Daten abfragen
+            final String SQL = "SELECT * FROM personen";
+
+            ResultSet results = stmt.executeQuery(SQL);
+
+            while(results.next()) {
+                System.out.print(results.getInt("id") + ": ");
+                System.out.print(results.getString("firstname") + " ");
+                System.out.print(results.getString("lastname") + " ");
+                System.out.print(results.getString("birthdate"));
+                System.out.println();
             }
+
 
         }
         catch (SQLException e) {
