@@ -41,8 +41,6 @@ public class DbTest {
                 System.out.print(results.getString("birthdate"));
                 System.out.println();
             }
-
-
         }
         catch (SQLException e) {
             e.printStackTrace();
