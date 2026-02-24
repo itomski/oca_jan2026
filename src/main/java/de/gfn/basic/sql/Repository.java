@@ -9,6 +9,15 @@ public interface Repository<T extends AbstractEntity> {
 
     // CRUD - Create, Read, Update, Delete
 
+    default boolean save(T t) throws SQLException {
+        if(t.getId() > 0) {
+            return update(t);
+        }
+        else {
+            return insert(t);
+        }
+    }
+
     boolean insert(T t) throws SQLException;
 
     boolean update(T t) throws SQLException;

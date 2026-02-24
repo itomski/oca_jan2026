@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class PersonRepository implements Repository<Person> {
+public class PersonRepository extends AbstractRepository<Person> {
 
     private final String TABLE = "personen";
 
@@ -20,9 +20,7 @@ public class PersonRepository implements Repository<Person> {
         // TODO: auf PreparedStatements umstellen
         final String SQL_TPL = "INSERT INTO " + TABLE + " (id, firstname, lastname, birthdate) VALUES(null, '%s', '%s', '%s')";
 
-        try(Connection dbh = DriverManager.getConnection("jdbc:sqlite:data.db");
-            Statement stmt = dbh.createStatement()) {
-
+        try(Connection dbh = DbUtils.getConnection(); Statement stmt = dbh.createStatement()) {
             final String SQL = String.format(SQL_TPL, person.getFirstname(), person.getLastname(), person.getBirthdate());
             return stmt.executeUpdate(SQL) > 0;
         }
@@ -43,8 +41,7 @@ public class PersonRepository implements Repository<Person> {
 
         final String SQL = "SELECT * FROM " + TABLE;
 
-        try(Connection dbh = DriverManager.getConnection("jdbc:sqlite:data.db");
-            Statement stmt = dbh.createStatement()) {
+        try(Connection dbh = DbUtils.getConnection(); Statement stmt = dbh.createStatement()) {
 
             List<Person> personen = new ArrayList<>();
 
@@ -59,12 +56,17 @@ public class PersonRepository implements Repository<Person> {
 
     @Override
     public boolean delete(Person person) throws SQLException {
-        throw new UnsupportedOperationException("Ist noch nicht implementiert!");
+        return delete(person.getId());
     }
 
     @Override
     public boolean delete(int id) throws SQLException {
-        throw new UnsupportedOperationException("Ist noch nicht implementiert!");
+
+        final String SQL = "DELETE FROM " + TABLE + " WHERE id = " + id;
+
+        try(Connection dbh = DbUtils.getConnection(); Statement stmt = dbh.createStatement()) {
+            return stmt.executeUpdate(SQL) == 1;
+        }
     }
 
     @Override
@@ -88,10 +90,6 @@ public class PersonRepository implements Repository<Person> {
                                 "lastname TEXT NOT NULL, " +
                                 "birthdate DATE NOT NULL)";
 
-        try(Connection dbh = DriverManager.getConnection("jdbc:sqlite:data.db");
-            Statement stmt = dbh.createStatement()) {
-
-            return stmt.execute(SQL);
-        }
+        return executeSqlQuery(SQL);
     }
 }

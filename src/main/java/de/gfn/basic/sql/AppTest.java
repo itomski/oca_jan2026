@@ -13,8 +13,12 @@ public class AppTest {
         try {
             repo = new PersonRepository();
 
-//            Person p = new Person("Bruce", "Banner", LocalDate.of(1985, 1, 10));
-//            if(repo.insert(p)) {
+            Person person = new Person("Carol", "Danvers", LocalDate.of(1988, 5, 18));
+            if(repo.save(person)) {
+                System.out.println("Erfolgreich gespeichert.");
+            }
+
+//            if(repo.insert(person)) {
 //                System.out.println("Erfolgreich gespeichert.");
 //            }
 
