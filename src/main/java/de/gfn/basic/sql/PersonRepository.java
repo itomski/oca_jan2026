@@ -2,71 +2,56 @@ package de.gfn.basic.sql;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class PersonRepository extends AbstractRepository<Person> {
 
-    private final String TABLE = "personen";
-
     public PersonRepository() throws SQLException {
+        super("personen");
         createTable();
     }
 
     @Override
     public boolean insert(Person person) throws SQLException {
 
-        // TODO: auf PreparedStatements umstellen
-        final String SQL_TPL = "INSERT INTO " + TABLE + " (id, firstname, lastname, birthdate) VALUES(null, '%s', '%s', '%s')";
+        final String SQL = "INSERT INTO " + TABLE + " (id, firstname, lastname, birthdate) VALUES(null, ?, ?, ?)";
 
-        try(Connection dbh = DbUtils.getConnection(); Statement stmt = dbh.createStatement()) {
-            final String SQL = String.format(SQL_TPL, person.getFirstname(), person.getLastname(), person.getBirthdate());
-            return stmt.executeUpdate(SQL) > 0;
+        try(Connection dbh = DbUtils.getConnection(); PreparedStatement stmt = dbh.prepareStatement(SQL)) {
+            stmt.setString(1, person.getFirstname());
+            stmt.setString(2, person.getLastname());
+            stmt.setString(3, person.getBirthdate().toString());
+            stmt.execute();
+            return stmt.getUpdateCount() > 0;
         }
     }
 
     @Override
     public boolean update(Person person) throws SQLException {
-        throw new UnsupportedOperationException("Ist noch nicht implementiert!");
+        final String SQL = "UPDATE " + TABLE + " SET firstname = ?, lastname = ?, birthdate = ? WHERE id = ?";
+
+        try(Connection dbh = DbUtils.getConnection(); PreparedStatement stmt = dbh.prepareStatement(SQL)) {
+            stmt.setString(1, person.getFirstname());
+            stmt.setString(2, person.getLastname());
+            stmt.setString(3, person.getBirthdate().toString());
+            stmt.setInt(4, person.getId());
+            stmt.execute();
+            return stmt.getUpdateCount() > 0;
+        }
     }
 
     @Override
     public Optional<Person> find(int id) throws SQLException {
-        throw new UnsupportedOperationException("Ist noch nicht implementiert!");
+        final String SQL = "SELECT * FROM " + TABLE + " WHERE id = " + id;
+        // Stream findFirst liefert ein Optional
+        return find(SQL).stream().findFirst();
     }
 
     @Override
     public List<Person> find() throws SQLException {
 
         final String SQL = "SELECT * FROM " + TABLE;
-
-        try(Connection dbh = DbUtils.getConnection(); Statement stmt = dbh.createStatement()) {
-
-            List<Person> personen = new ArrayList<>();
-
-            ResultSet rs = stmt.executeQuery(SQL);
-            while(rs.next()) {
-                personen.add(create(rs));
-            }
-
-            return personen;
-        }
-    }
-
-    @Override
-    public boolean delete(Person person) throws SQLException {
-        return delete(person.getId());
-    }
-
-    @Override
-    public boolean delete(int id) throws SQLException {
-
-        final String SQL = "DELETE FROM " + TABLE + " WHERE id = " + id;
-
-        try(Connection dbh = DbUtils.getConnection(); Statement stmt = dbh.createStatement()) {
-            return stmt.executeUpdate(SQL) == 1;
-        }
+        return find(SQL);
     }
 
     @Override
