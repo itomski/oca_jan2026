@@ -12,6 +12,9 @@ public class Strings {
 
         System.out.println(str);
 
+//        for(int i = 10, j = 15; i < 100; i++) {
+//        }
+
         Student s = new Student("Peter", "Parker", 25);
         System.out.println(s);
 
