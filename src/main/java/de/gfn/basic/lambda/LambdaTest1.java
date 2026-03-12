@@ -11,7 +11,7 @@ public class LambdaTest1 {
 
             @Override
             public void machWas(int i) {
-                System.out.println("Test1: " + i + j);
+                System.out.println("de.gfn.basic.Test1: " + i + j);
             }
         };
 
