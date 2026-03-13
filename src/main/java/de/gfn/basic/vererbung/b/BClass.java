@@ -2,6 +2,9 @@ package de.gfn.basic.vererbung.b;
 
 import de.gfn.basic.vererbung.a.AClass;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BClass extends AClass {
 
     public static void main(String[] args) {
