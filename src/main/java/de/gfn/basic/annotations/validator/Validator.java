@@ -16,7 +16,6 @@ public class Validator {
             for(var anno : field.getAnnotations()) {
             }
 
-
             if(field.isAnnotationPresent(NotNull.class)) {
                 if(fieldValue == null) {
                     isValid = false;
